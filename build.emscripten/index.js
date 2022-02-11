@@ -2,12 +2,14 @@
 
 var iterations = 0
 
-/*Module['onRuntimeInitialized'] = () => {
-	//let obj = new Module.Application()
-	//obj.searchBenchmark()
-*/	
-	
-//}
+const RUN_WASM_CODE = true
+
+if(RUN_WASM_CODE){
+	Module['onRuntimeInitialized'] = () => {
+		let obj = new Module.Application()
+		obj.searchBenchmark()	
+	}
+}
 
 function createRandomGuy(){
 	let theGuy = {}

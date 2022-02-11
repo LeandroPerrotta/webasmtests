@@ -98,9 +98,12 @@ void Application::searchBenchmark() {
 
 bool Application::isPrime(unsigned num){
 	
-	return true;
-	
-	//auto search = primesCache.find(num);
+	/*
+	After Node/JS beating C++ I tried create a cache to speed up Primes finding.
+	It helps a little, but even with this, Node/JS still beating C++ code...
+	This cache code doenst exists in JS.
+	*/
+	auto search = primesCache.find(num);
 	if(primesCache[num]){
 		primesCacheUsed++;
 		return primesCache[num];

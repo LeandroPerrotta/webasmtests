@@ -19,8 +19,7 @@ add_definitions("-std=c++11")
 set(EMSCRIPT OFF)
 
 if(EMSCRIPT)
-	message(STATUS "EMSCRIPT BUILD ON")
-	set(CMAKE_TOOLCHAIN_FILE '/home/leo/emscripten-sdk/upstream/emscripten/cmake/Modules/Platform/Emscripten.cmake')
+	message(STATUS "EMSCRIPT BUILD ON")	
 	add_definitions(-DUSE_EMSCRIPT)
 endif()
 
