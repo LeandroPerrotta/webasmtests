@@ -31,5 +31,7 @@ Anyway, good learning lesson. And good know the modern JS V8 engine is really ve
 Final results:
 
 ```Elapsed time: 2727.1ms (C++ Web ASM)```
+
 ```Elapsed time: 2748.2ms (C++ Native)```
+
 ```Elapsed time: 3749ms (javascript)```
