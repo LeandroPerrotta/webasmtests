@@ -11,3 +11,11 @@ The purpose of this project is to create a very basic minimal CMake project able
 3. Run ```make```
 
 Compiled file called ```client.js``` along with the preloaded assets in file ```client.data``` will be put into ```build.emscripten``` directory. Check if it works by opening ```build.emscripten/index.html``` in browser.
+
+# Benchmark results
+
+Its a surprise but, pure Node/JS performs faster on this code than Web Assembly replica (about 80x faster).
+
+More surprise is that even compilling it in pure C++ binary, the Node/JS version still runs about 4-5x faster, even when compiled with full perfomance build ```-O3```
+
+I probably doing something very bad on C++ code replica.
