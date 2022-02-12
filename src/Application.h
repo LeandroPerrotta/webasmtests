@@ -22,9 +22,6 @@ public:
 	const bool isPrime(unsigned int num);
 	
 	unsigned int iterations = 0;
-	Primes primesCache;
-	int primesCacheUsed = 0;
-	int uncachedPrimesUsed = 0;
 	
 };
 

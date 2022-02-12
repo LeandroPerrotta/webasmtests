@@ -83,9 +83,6 @@ void Application::searchBenchmark() {
 	
 	std::clog << "Total primes found: " << primesFound << std::endl;
 	std::clog << "Iterations: " << iterations << std::endl;
-	std::clog << "Cached primes length: " << primesCache.size() << std::endl;
-	std::clog << "Cached primes used: " << primesCacheUsed << std::endl;
-	std::clog << "Uncached primes used: " << uncachedPrimesUsed << std::endl;
 
 	std::chrono::high_resolution_clock::time_point end = std::chrono::high_resolution_clock::now();
 	std::chrono::duration<double, std::milli> time_span = end - start;	
@@ -99,30 +96,14 @@ void Application::searchBenchmark() {
 
 const bool Application::isPrime(unsigned num){
 	
-	//return true;
-	
-	/*auto search = primesCache.find(num);
-	if(search != primesCache.end()){
-		primesCacheUsed++;
-		return search->second;
-	}*/
-	
 	const double s = std::sqrt(num);
     for(unsigned int i = 2; i <= s; i++){
 		iterations++;
         if(num % i == 0) {
-			//primesCache[num] = false;
-			uncachedPrimesUsed++;
 			return false; 
-		}
-		else{
-			//primesCache[num] = true;
 		}
 	}
 	
-	bool isPrime = num > 1;
-	//primesCache[num] = isPrime;
-	uncachedPrimesUsed++;
-	
+	bool isPrime = num > 1;	
     return isPrime;
 }
