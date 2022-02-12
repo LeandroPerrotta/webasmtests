@@ -9,16 +9,17 @@ using namespace emscripten;
 #endif
 
 #include <map>
+#include <unordered_map>
 #include <utility>
 
-typedef std::map<unsigned int, unsigned int> Guy;
+typedef std::unordered_map<unsigned int, unsigned int> Guy;
 typedef std::map<unsigned int, bool> Primes;
 
 class Application {
 public:
     void searchBenchmark();
-	Guy createRandomGuy();
-	bool isPrime(unsigned int num);
+	Guy* createRandomGuy();
+	const bool isPrime(unsigned int num);
 	
 	unsigned int iterations = 0;
 	Primes primesCache;

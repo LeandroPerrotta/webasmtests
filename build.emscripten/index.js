@@ -1,13 +1,13 @@
-//var Module = require('./client.js')
+var Module = require('./client.js')
 
 var iterations = 0
 
-/*Module['onRuntimeInitialized'] = () => {
-	//let obj = new Module.Application()
-	//obj.searchBenchmark()
-*/	
+Module['onRuntimeInitialized'] = () => {
+	let obj = new Module.Application()
+	obj.searchBenchmark()
 	
-//}
+	searchBenchmark()
+}
 
 function createRandomGuy(){
 	let theGuy = {}
@@ -21,7 +21,8 @@ function createRandomGuy(){
 }
 
 const isPrime = function(num){
-		return true
+	
+	//return true;
 	
     for(let i = 2, s = Math.sqrt(num); i <= s; i++){
 		iterations++
@@ -66,6 +67,7 @@ function searchBenchmark(){
 	
 	let primesFound = 0
 
+	
 	for(let guysToSearch = 0; guysToSearch < 20; guysToSearch++){
 		
 		for(let i in myGuys){
@@ -82,10 +84,9 @@ function searchBenchmark(){
 		
 	}	
 	
+	
 	console.log(`Total primes found: ${primesFound}`)	
 	console.log(`Iterations: ${iterations}`)	
+	
 	c.finish()
-
 }
-
-searchBenchmark()

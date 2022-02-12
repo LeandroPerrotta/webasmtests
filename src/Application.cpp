@@ -1,6 +1,7 @@
 #include "Application.h"
 
 #include <vector>
+#include <array>
 #include <iostream>
 #include <ctime>
 #include <cmath>
@@ -14,11 +15,11 @@ int main(){
 }
 #endif
 
-Guy Application::createRandomGuy() {
-	Guy theGuy;
+Guy* Application::createRandomGuy() {
+	Guy* theGuy = new Guy();
 	
 	for(unsigned int propCount = 0; propCount < 50; propCount++){
-		theGuy[propCount] = rand() % 50000 + 1;
+		theGuy->insert({propCount, rand() % 50000 + 1});
 		iterations++;
 	}	
 	
@@ -26,6 +27,7 @@ Guy Application::createRandomGuy() {
 }
 
 void Application::searchBenchmark() {
+
 	std::chrono::high_resolution_clock::time_point start = std::chrono::high_resolution_clock::now();
 
 	/*
@@ -36,13 +38,12 @@ void Application::searchBenchmark() {
 	
 	std::clog << "Starting benchmark..." << std::endl;
 	
-	std::vector<Guy> myGuys;
-	myGuys.reserve(100000);
+	std::array<Guy*, 100000> myGuys;
 	
 	std::clog << "Filling up guys...";
 	
 	for(unsigned int guysCount = 0; guysCount < 100000; guysCount++){
-		myGuys.push_back(createRandomGuy());
+		myGuys[guysCount] = createRandomGuy();
 		iterations++;
 	}
 	
@@ -66,61 +67,61 @@ void Application::searchBenchmark() {
 	std::cout << "Searching at " << myGuys.size() << std::endl;
 	for(unsigned int guysToSearch = 0; guysToSearch < 20; guysToSearch++){
 			
-		
-		for(unsigned int guy_id = 0; guy_id < 100000; guy_id++){
-			
-			Guy theGuy = myGuys[guy_id];
+		for(Guy* theGuy : myGuys){
 			for(unsigned int y : keysToBeFound){
 				
-				if(isPrime(theGuy[y])){
-					
-					primesFound++;
-					
+				if(isPrime(theGuy->at(y))){		
+					primesFound++;	
 				}
-				
+
 				iterations++;
-			}	
-		}		
+			}
+		}
 	}	
+
 	std::cout << " Done" << std::endl;
 	
 	std::clog << "Total primes found: " << primesFound << std::endl;
-	
-	std::chrono::high_resolution_clock::time_point end = std::chrono::high_resolution_clock::now();
-	std::chrono::duration<double, std::milli> time_span = end - start;	
-	
-	std::clog << "Elapsed time: " << time_span.count() << "ms (C++)" << std::endl;
 	std::clog << "Iterations: " << iterations << std::endl;
 	std::clog << "Cached primes length: " << primesCache.size() << std::endl;
 	std::clog << "Cached primes used: " << primesCacheUsed << std::endl;
 	std::clog << "Uncached primes used: " << uncachedPrimesUsed << std::endl;
+
+	std::chrono::high_resolution_clock::time_point end = std::chrono::high_resolution_clock::now();
+	std::chrono::duration<double, std::milli> time_span = end - start;	
+	
+	#ifndef USE_EMSCRIPT
+	std::clog << "Elapsed time: " << time_span.count() << "ms (C++ Native)" << std::endl;	
+	#else
+	std::clog << "Elapsed time: " << time_span.count() << "ms (C++ Web ASM)" << std::endl;	
+	#endif
 }
 
-bool Application::isPrime(unsigned num){
+const bool Application::isPrime(unsigned num){
 	
-	return true;
+	//return true;
 	
-	//auto search = primesCache.find(num);
-	if(primesCache[num]){
+	/*auto search = primesCache.find(num);
+	if(search != primesCache.end()){
 		primesCacheUsed++;
-		return primesCache[num];
-	}
+		return search->second;
+	}*/
 	
-	double s = std::sqrt(num);
+	const double s = std::sqrt(num);
     for(unsigned int i = 2; i <= s; i++){
 		iterations++;
         if(num % i == 0) {
-			primesCache[num] = false;
+			//primesCache[num] = false;
 			uncachedPrimesUsed++;
 			return false; 
 		}
 		else{
-			primesCache[num] = true;
+			//primesCache[num] = true;
 		}
 	}
 	
 	bool isPrime = num > 1;
-	primesCache[num] = isPrime;
+	//primesCache[num] = isPrime;
 	uncachedPrimesUsed++;
 	
     return isPrime;
